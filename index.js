@@ -67,48 +67,45 @@ module.exports = () => {
           });
         });
       });
-      var i = 1;
       if (largeScreenStyles && Object.keys(largeScreenStyles).length) {
         Object.keys(largeScreenStyles).forEach(function (key) {
           const styleArray = largeScreenStyles[key];
-          largeStyleRawString += `${key}{`;
-          const styleData = styleArray
-            .map((style) => `${style.prop}: ${style.value}`)
-            .join("; ");
-          largeStyleRawString += `${styleData};} `;
+          largeStyleRawString += startingStyleText(key);
+          const styleData = styleDataGenerate(styleArray);
+          largeStyleRawString += endingStyleText(styleData);
         });
-        root.append(
-          `@media screen and (min-width: ${largeSize}px) {${largeStyleRawString}} `
-        );
+        root.append(breakPointText(largeSize, largeStyleRawString));
       }
       if (mediumScreenStyles && Object.keys(mediumScreenStyles).length) {
         Object.keys(mediumScreenStyles).forEach(function (key) {
           const styleArray = mediumScreenStyles[key];
-          mediumStyleRawString += `${key}{`;
-          const styleData = styleArray
-            .map((style) => `${style.prop}: ${style.value}`)
-            .join("; ");
-          mediumStyleRawString += `${styleData};} `;
+          mediumStyleRawString += startingStyleText(key);
+          const styleData = styleDataGenerate(styleArray);
+          mediumStyleRawString += endingStyleText(styleData);
         });
-        root.append(
-          `@media screen and (min-width: ${mediumSize}px) {${mediumStyleRawString}} `
-        );
+        root.append(breakPointText(mediumSize, mediumStyleRawString));
       }
       if (smallScreenStyles && Object.keys(smallScreenStyles).length) {
         Object.keys(smallScreenStyles).forEach(function (key) {
           const styleArray = smallScreenStyles[key];
-          smallStyleRawString += `${key}{`;
-          const styleData = styleArray
-            .map((style) => `${style.prop}: ${style.value}`)
-            .join("; ");
-          smallStyleRawString += `${styleData};}`;
+          smallStyleRawString += startingStyleText(key);
+          const styleData = styleDataGenerate(styleArray);
+          smallStyleRawString += endingStyleText(styleData);
         });
-        root.append(
-          `@media screen and (min-width: ${smallSize}px) {${smallStyleRawString}} `
-        );
+        root.append(breakPointText(smallSize, smallStyleRawString));
       }
     },
   };
 };
+
+const breakPointText = (size, text) =>
+  `\n @media screen and (min-width: ${size}px)\n{\n${text}\n}\n `;
+
+const startingStyleText = (key) => `${key}{\n`;
+
+const endingStyleText = (styleData) => `${styleData}}\n`;
+
+const styleDataGenerate = (array) =>
+  array.map((style) => `  ${style.prop}: ${style.value};\n`).join("");
 
 module.exports.postcss = true;

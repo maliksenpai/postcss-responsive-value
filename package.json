@@ -9,7 +9,6 @@
     "postcss-responsive-value"
   ],
   "scripts": {
-    "unit": "uvu . '\\.test\\.js$'",
     "test": "jest"
   },
   "author": "maliksenpai <cramixzx@hotmail.com>",
@@ -24,8 +23,7 @@
   "devDependencies": {
     "eslint": "^8.47.0",
     "jest": "^29.7.0",
-    "postcss": "^8.4.27",
-    "uvu": "^0.5.6"
+    "postcss": "^8.4.27"
   },
   "eslintConfig": {
     "parserOptions": {
